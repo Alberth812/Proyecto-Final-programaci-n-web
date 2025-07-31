@@ -4,7 +4,7 @@
 
 ### **Ingeniería en Sistemas Computacionales**
 
-### **Proyecto Final: Sistema de Gestión de Eventos "TicketMaster Pro"**
+### **Proyecto Final: Sistema de Gestión de Eventos "TicketChiri"**
 
 #### **Una aplicación web integral para la venta y gestión de boletos digitales**
 
@@ -20,10 +20,10 @@
 
 
 
-# TicketMaster Pro – Sistema de Venta de Boletos para Eventos
+# TicketChiri – Sistema de Venta de Boletos para Eventos
 
 ### Descripción del Sistema
-**TicketMaster Pro** es un sistema web para la compra y gestión de boletos digitales para conciertos, espectáculos y eventos culturales. Permite a los usuarios navegar por eventos, seleccionar asientos interactivamente y realizar compras en tiempo real, mientras que los administradores pueden gestionar el catálogo de eventos desde un panel especializado.
+**TicketChiri** es un sistema web para la compra y gestión de boletos digitales para conciertos, espectáculos y eventos culturales. Permite a los usuarios navegar por eventos, seleccionar asientos interactivamente y realizar compras en tiempo real, mientras que los administradores pueden gestionar el catálogo de eventos desde un panel especializado.
 
 
 
@@ -403,5 +403,16 @@ php artisan serve
 ## Licencia
 Este proyecto es de código abierto para fines educativos.
 
+## Capturas de proyecto
+
+<img width="1841" height="922" alt="image" src="https://github.com/user-attachments/assets/5c03d9ff-3ad8-4867-bfc1-37a11a85540a" />
+
+<img width="1842" height="918" alt="image" src="https://github.com/user-attachments/assets/b6290ee9-f774-4516-8027-00aa175145d3" />
+
+<img width="1847" height="925" alt="image" src="https://github.com/user-attachments/assets/46815d6e-c051-4f22-af65-50f23624aee6" />
+
+<img width="1833" height="915" alt="image" src="https://github.com/user-attachments/assets/9921873c-e50e-49e7-980b-fa1a5f35f550" />
+
+<img width="1853" height="814" alt="image" src="https://github.com/user-attachments/assets/3950cf8b-2a9a-46ac-ae26-aab71e3d3a7a" />
 
 
