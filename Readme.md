@@ -265,7 +265,7 @@ Schema::create('conciertos', function (Blueprint $table) {
 ```
 
 
-## 💳 Proceso Principal: Venta de Boletos
+##  Proceso Principal: Venta de Boletos
 
 
 ### 1. **Reserva de Asientos**
