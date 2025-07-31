@@ -1,0 +1,133 @@
+<div class="admin-container">
+    <header class="header-bar">
+      <h2>Panel de Administración de Conciertos</h2>
+      <button class="btn-salir" (click)="salir()">Salir</button>
+    </header>
+
+    <div class="top-bar">
+      <button (click)="abrirModal()" class="btn-nuevo">+ Nuevo Concierto</button>
+      <input type="text" placeholder="Buscar conciertos..." [(ngModel)]="searchTerm" />
+
+      <!-- Filtro por categoría -->
+      <select [(ngModel)]="categoriaSeleccionada">
+        <option value="">Todas las Categorías</option>
+        <option *ngFor="let cat of categorias.slice(1)" [value]="cat">{{ cat }}</option>
+      </select>
+    </div>
+
+    <div *ngIf="mensaje" class="alert" [ngClass]="{'alert-success': tipoMensaje === 'exito', 'alert-error': tipoMensaje === 'error'}">
+      {{ mensaje }}
+    </div>
+
+    <table class="tabla-conciertos">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Artista</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Lugar</th>
+          <th>Precio</th>
+          <th>Boletos disponibles</th>
+          <th>Boletos VIP</th>
+          <th>Boletos Platino</th>
+          <th>Boletos Plata</th>
+          <th>Boletos Oro</th>
+          <th>Boletos General</th>
+          <th>Categoría</th>
+          <th>Rating</th>
+          <th>Descripción</th>
+          <th>Creado</th>
+          <th>Actualizado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of conciertosFiltrados()">
+          <td class="imagen-cell">
+            <img [src]="c.imagen || 'https://via.placeholder.com/80x50?text=No+Image'" alt="Imagen {{ c.titulo }}" />
+          </td>
+          <td>{{ c.id }}</td>
+          <td>{{ c.titulo }}</td>
+          <td>{{ c.artista }}</td>
+          <td>{{ c.fecha_evento }}</td>
+          <td>{{ c.hora }}</td>
+          <td>{{ c.lugar }}</td>
+          <td>${{ c.precio_boleto }}</td>
+          <td>{{ c.boletos_disponibles }}</td>
+          <td>{{ c.boletos_vip }}</td>
+          <td>{{ c.boletos_platino }}</td>
+          <td>{{ c.boletos_plata }}</td>
+          <td>{{ c.boletos_oro }}</td>
+          <td>{{ c.boletos_general }}</td>
+          <td>{{ c.categoria || '-' }}</td>
+          <td>{{ c.rating }}</td>
+          <td>{{ c.descripcion }}</td>
+          <td>{{ c.created_at | date:'short' }}</td>
+          <td>{{ c.updated_at | date:'short' }}</td>
+          <td>
+            <button class="btn-edit" (click)="editarConcierto(c)" title="Editar">✏️</button>
+            <button class="btn-delete" (click)="eliminarConcierto(c.id)" title="Eliminar">🗑️</button>
+          </td>
+        </tr>
+        <tr *ngIf="conciertosFiltrados().length === 0">
+          <td colspan="20" class="no-result">No se encontraron conciertos.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Modal -->
+    <div class="modal" *ngIf="modalAbierto">
+      <div class="modal-content">
+        <h3>{{ modoEdicion ? 'Editar Concierto' : 'Nuevo Concierto' }}</h3>
+        <form (ngSubmit)="guardarConcierto()">
+          <input type="text" placeholder="Título *" [(ngModel)]="conciertoEditando.titulo" name="titulo" required />
+          <input type="text" placeholder="Artista *" [(ngModel)]="conciertoEditando.artista" name="artista" required />
+          <input type="date" [(ngModel)]="conciertoEditando.fecha_evento" name="fecha_evento" required />
+          <input type="time" [(ngModel)]="conciertoEditando.hora" name="hora" required />
+          <input type="text" placeholder="Lugar *" [(ngModel)]="conciertoEditando.lugar" name="lugar" required />
+
+          <select [(ngModel)]="conciertoEditando.categoria" name="categoria" required>
+            <option value="">Selecciona categoría</option>
+            <option *ngFor="let cat of categorias.slice(1)" [value]="cat">{{ cat }}</option>
+          </select>
+
+          <input type="number" placeholder="Precio *" [(ngModel)]="conciertoEditando.precio_boleto" name="precio_boleto" required min="0" />
+          
+          <!-- Información de boletos por defecto -->
+          <div class="info-boletos" *ngIf="!modoEdicion">
+            <p><strong>Distribución de boletos por defecto:</strong></p>
+            <ul>
+              <li>Total: 750 boletos</li>
+              <li>VIP: 100 boletos</li>
+              <li>Platino: 150 boletos</li>
+              <li>Plata: 150 boletos</li>
+              <li>Oro: 100 boletos</li>
+              <li>General: 250 boletos</li>
+            </ul>
+          </div>
+          
+          <!-- Campos de boletos solo en modo edición -->
+          <div *ngIf="modoEdicion">
+            <input type="number" placeholder="Boletos disponibles *" [(ngModel)]="conciertoEditando.boletos_disponibles" name="boletos_disponibles" required min="0" />
+            <input type="number" placeholder="Boletos VIP" [(ngModel)]="conciertoEditando.boletos_vip" name="boletos_vip" min="0" />
+            <input type="number" placeholder="Boletos Platino" [(ngModel)]="conciertoEditando.boletos_platino" name="boletos_platino" min="0" />
+            <input type="number" placeholder="Boletos Plata" [(ngModel)]="conciertoEditando.boletos_plata" name="boletos_plata" min="0" />
+            <input type="number" placeholder="Boletos Oro" [(ngModel)]="conciertoEditando.boletos_oro" name="boletos_oro" min="0" />
+            <input type="number" placeholder="Boletos General" [(ngModel)]="conciertoEditando.boletos_general" name="boletos_general" min="0" />
+          </div>
+
+          <input type="number" placeholder="Rating (0-5)" [(ngModel)]="conciertoEditando.rating" name="rating" min="0" max="5" step="0.1" />
+          <input type="url" placeholder="Imagen (URL)" [(ngModel)]="conciertoEditando.imagen" name="imagen" />
+          <textarea placeholder="Descripción" [(ngModel)]="conciertoEditando.descripcion" name="descripcion"></textarea>
+
+          <div class="botones-form">
+            <button type="submit">{{ modoEdicion ? 'Actualizar' : 'Crear' }}</button>
+            <button type="button" (click)="cerrarModal()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,36 @@
+<div class="compra-container" *ngIf="conciertoSeleccionado">
+  <h1>{{ conciertoSeleccionado.titulo }}</h1>
+  <h3>{{ conciertoSeleccionado.artista }} - {{ conciertoSeleccionado.fecha_evento }} | {{ conciertoSeleccionado.hora }}</h3>
+  <h4>Lugar: {{ conciertoSeleccionado.lugar }}</h4>
+
+  <div class="escenario">ESCENARIO</div>
+
+  <div class="zonas-container">
+    <div *ngFor="let zona of zonas" class="zona-bloque">
+      <div class="zona-header" [style.backgroundColor]="zona.color">
+        <h2>{{ zona.nombre }}</h2>
+        <p>{{ zona.descripcion }}</p>
+        <p class="precio">Precio: ${{ zona.precio }}</p>
+      </div>
+
+      <div class="filas">
+        <div *ngFor="let fila of zona.filas" class="fila">
+          <div *ngFor="let asiento of fila.asientos"
+               class="asiento"
+               [class.ocupado]="asiento.ocupado"
+               [class.seleccionado]="estaSeleccionado(zona.nombre, asiento.id)"
+               (click)="!asiento.ocupado && toggleSeleccionAsiento(zona.nombre, asiento.id)">
+            {{ asiento.id }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="resumen" style="text-align: right;">
+    <h3>Asientos seleccionados: {{ asientosSeleccionados.length }}</h3>
+    <p>Total a pagar: ${{ totalSeleccionados }}</p>
+    <!-- Cambia el texto y método del botón -->
+<button (click)="comprar()" [disabled]="asientosSeleccionados.length === 0">Comprar</button>
+  </div>
+</div>

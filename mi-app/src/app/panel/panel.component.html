@@ -1,0 +1,156 @@
+<header class="header">
+  <div class="logo">
+    <span>Ticket Chiri</span>
+  </div>
+  <nav class="main-nav">
+    <ul>
+      <li><a (click)="setActiveMenu('eventos')" [class.active]="activeMenuItem === 'eventos'">Eventos</a></li>
+      <li><a (click)="setActiveMenu('galeria')" [class.active]="activeMenuItem === 'galeria'">Galería</a></li>
+      <li><a (click)="setActiveMenu('contactos')" [class.active]="activeMenuItem === 'contactos'">Contactos</a></li>
+    </ul>
+  </nav>
+  <div class="user-actions">
+    <div class="cart-icon" (click)="goToCart()">
+      <span class="cart-count" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+    </div>
+    <div class="profile-menu-container">
+      <div class="profile-icon" (click)="toggleProfileMenu($event)">
+        <span>Perfil</span>
+      </div>
+      <ul class="profile-menu" *ngIf="isProfileMenuOpen">
+        <li (click)="verPerfil()">Ver perfil</li>
+        <li (click)="verCompras()">Ver compras</li>
+        <li (click)="logout()">Cerrar sesión</li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<main class="main-content">
+
+  <!-- Carrusel -->
+  <section class="carousel-section">
+    <div class="carousel-container">
+      <div class="carousel-track" [style.transform]="'translateX(' + (-currentSlide * 100) + '%)'">
+        <div class="carousel-slide" *ngFor="let image of carouselImages; let i = index">
+          <img [src]="image.image" [alt]="image.title">
+          <div class="slide-content">
+            <h2>{{ image.title }}</h2>
+            <p>{{ image.subtitle }}</p>
+            <button class="btn-primary" (click)="verDetalles(image.category)">Ver Detalles</button>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-button prev" (click)="previousSlide()">&#10094;</button>
+      <button class="carousel-button next" (click)="nextSlide()">&#10095;</button>
+      <div class="carousel-dots">
+        <span *ngFor="let image of carouselImages; let i = index" [class.active]="i === currentSlide" (click)="goToSlide(i)"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Eventos -->
+  <section id="seccion-eventos" class="filters-section">
+    <div class="category-filters">
+      <button *ngFor="let category of categories"
+              [class.active]="selectedCategory === category"
+              (click)="filterByCategory(category)">
+        {{ category }}
+      </button>
+    </div>
+    <div class="sort-by">
+      <label for="sortBy">Ordenar por:</label>
+      <select id="sortBy" (change)="onSortChange($event)" [(ngModel)]="sortBy">
+        <option value="date">Fecha</option>
+        <option value="price">Precio</option>
+        <option value="popularity">Popularidad</option>
+      </select>
+    </div>
+  </section>
+
+  <section class="events-grid">
+    <div *ngIf="isLoading" class="loading-spinner">Cargando eventos...</div>
+    <div *ngIf="!isLoading && filteredEvents.length === 0" class="no-events-message">
+      No hay eventos disponibles para esta selección.
+    </div>
+    <div class="event-card" *ngFor="let event of filteredEvents">
+      <img [src]="event.image" [alt]="event.title">
+      <div class="card-content">
+        <h3>{{ event.title }}</h3>
+        <p class="event-details">
+          <span>{{ event.date }}</span> |
+          <span>{{ event.location }}</span> |
+          <span>{{ event.time }}</span>
+        </p>
+        <p class="event-price">Precio: ${{ event.price | number:'1.2-2' }}</p>
+        <div class="event-meta">
+          <span class="event-category">{{ event.category }}</span>
+          <span class="event-rating">{{ renderStars(event.rating) }}</span>
+        </div>
+        <p class="event-description">{{ event.description }}</p>
+        <button class="btn-buy" (click)="irASeleccionAsientos(event)">Comprar Boletos</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Galería -->
+  <section id="seccion-galeria" class="teatro-info-section">
+    <div class="teatro-info-flex">
+      <div class="teatro-img">
+        <img src="https://th.bing.com/th/id/R.1598e5ac12be2951b9035a70e070f099?rik=V%2bzdJPJScMFThA&riu=http%3a%2f%2f2.bp.blogspot.com%2f_Bb19DQg-BEA%2fS7Fmvh4AagI%2fAAAAAAAAA6A%2f9ABHlYzXxNs%2fs1600%2fbellasartes1.jpg&ehk=ZllT62I8lbJKipbaWoIk8Y7cpUWEvrk61HFiQvNVRQI%3d&risl=&pid=ImgRaw&r=0" alt="Teatro de Bellas Artes" />
+      </div>
+      <div class="teatro-descripcion">
+        <h2>Estadio Teatro de Bellas Artes</h2>
+        <p>
+          Bienvenido al prestigioso Estadio Teatro de Bellas Artes, un lugar emblemático donde convergen cultura, conciertos y experiencias inolvidables.
+        </p>
+        <div class="carrusel-asientos">
+          <div class="carrusel-item">
+            <img src="https://bing.com/th/id/BCO.45f721c3-a512-4985-8962-82832d07f4f4.png" alt="Zona VIP" />
+            <h3>Zona VIP</h3>
+            <p>Asientos acolchonados, vista frontal al escenario y atención personalizada. Precio: $2500 MXN</p>
+          </div>
+          <div class="carrusel-item">
+            <img src="https://bing.com/th/id/BCO.21af7703-5fbb-41fd-aa92-63c7a17ec6d4.png" alt="Zona Platino" />
+            <h3>Zona Platino</h3>
+            <p>Buena vista a un precio accesible. Ideal para grupos y familia. Precio: $1000 MXN</p>
+          </div>
+          <div class="carrusel-item">
+            <img src="https://bing.com/th/id/BCO.26b85b5c-b59b-4cf3-a9a5-d9a17d082fd9.png" alt="Zona Plata" />
+            <h3>Zona Plata</h3>
+            <p>Espacios privados con excelente acústica. Vista elevada. Precio: $1800 MXN</p>
+          </div>
+          <div class="carrusel-item">
+            <img src="https://bing.com/th/id/BCO.599b880e-c506-4a52-909e-5c23782e8947.png" alt="Zona Oro" />
+            <h3>Oro</h3>
+            <p>Vista panorámica desde la parte alta del teatro. Precio: $850 MXN</p>
+          </div>
+          <div class="carrusel-item">
+            <img src="https://bing.com/th/id/BCO.9123201c-670b-4052-9f57-ab158884f1a1.png" alt="Zona General" />
+            <h3>General</h3>
+            <p>Zona abierta con buena vista general del espectáculo. Precio: $600 MXN</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="seccion-contactos" class="footer">
+    <div class="footer-content">
+      <div class="footer-text">
+        <h2>Contáctanos</h2>
+        <p>¿Tienes alguna duda o comentario? Escríbenos.</p>
+        <p>Tel: +52 55 1234 5678</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">Aviso de privacidad</a>
+        <a href="#">Términos y condiciones</a>
+        <a href="#">Soporte</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2025 TicketChiri. Todos los derechos reservados.
+    </div>
+  </footer>
+</main>

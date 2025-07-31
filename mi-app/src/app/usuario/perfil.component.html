@@ -1,0 +1,77 @@
+<div class="perfil-wrapper" *ngIf="usuario; else noUser">
+  <header class="perfil-header">
+    <div class="avatar-container">
+      <img
+        class="avatar"
+        [src]="'https://i.pravatar.cc/150?u=' + usuario.correo"
+        [alt]="'Avatar de ' + usuario.nombre"
+      />
+    </div>
+    <h1 class="nombre">{{ usuario.nombre }}</h1>
+    <span class="rol-tag">{{ usuario.rol | uppercase }}</span>
+  </header>
+
+  <section class="perfil-body">
+    <div class="campo">
+      <label>Nombre</label>
+      <input
+        type="text"
+        [(ngModel)]="usuario.nombre"
+        [readonly]="!modoEdicion"
+        placeholder="Tu nombre"
+      />
+    </div>
+
+    <div class="campo">
+      <label>Correo electrónico</label>
+      <input
+        type="email"
+        [(ngModel)]="usuario.correo"
+        [readonly]="!modoEdicion"
+        placeholder="tu@email.com"
+      />
+    </div>
+
+    <div class="cambiar-contrasena" *ngIf="modoEdicion">
+      <h3>Cambiar contraseña</h3>
+      <input
+        type="password"
+        placeholder="Nueva contraseña"
+        [(ngModel)]="nuevaContrasena"
+        name="nuevaContrasena"
+      />
+      <input
+        type="password"
+        placeholder="Confirmar contraseña"
+        [(ngModel)]="confirmarContrasena"
+        name="confirmarContrasena"
+      />
+      <p class="error" *ngIf="mensajeError">{{ mensajeError }}</p>
+    </div>
+
+    <div class="botones">
+      <button
+        *ngIf="!modoEdicion"
+        class="btn-editar"
+        (click)="habilitarEdicion()"
+        aria-label="Editar perfil"
+      >
+        <span>✏️ Editar perfil</span>
+      </button>
+
+      <div *ngIf="modoEdicion" class="btn-grupo">
+        <button class="btn-guardar" (click)="guardarCambios()">💾 Guardar</button>
+        <button class="btn-cancelar" (click)="cancelarEdicion()">❌ Cancelar</button>
+      </div>
+
+      <!-- Botón para salir -->
+      <button class="btn-salir" (click)="salir()" aria-label="Salir de perfil">🚪 Salir</button>
+    </div>
+  </section>
+</div>
+
+<ng-template #noUser>
+  <div class="sin-usuario">
+    <p>No hay información de usuario cargada.</p>
+  </div>
+</ng-template>

@@ -1,0 +1,512 @@
+/* General resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #141414;
+  color: #fff;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo span {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ff4081;
+}
+
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.main-nav a {
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.main-nav a.active,
+.main-nav a:hover {
+  color: #ff4081;
+}
+
+/* User actions */
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cart-icon {
+  position: relative;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background-color: #ff4081;
+  color: #fff;
+  font-size: 0.7rem;
+  border-radius: 50%;
+  padding: 2px 5px;
+}
+
+/* Profile menu */
+.profile-menu-container {
+  position: relative;
+}
+
+.profile-icon {
+  cursor: pointer;
+  padding: 0.4rem 0.8rem;
+  background-color: #ff4081;
+  border-radius: 20px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.profile-menu {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  list-style: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  width: 150px;
+  z-index: 100;
+}
+
+.profile-menu li {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.profile-menu li:hover {
+  background-color: #f5f5f5;
+}
+
+/* Main content */
+.main-content {
+  padding: 2rem;
+}
+
+/* Carousel */
+.carousel-section {
+  margin-bottom: 2rem;
+}
+
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  position: relative;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.slide-content {
+  position: absolute;
+  bottom: 30px;
+  left: 50px;
+  color: #fff;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+}
+
+.slide-content h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.slide-content p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.btn-primary {
+  background-color: #ff4081;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #e73370;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 10;
+  padding: 0 1rem;
+  border-radius: 4px;
+}
+
+.carousel-button.prev {
+  left: 10px;
+}
+
+.carousel-button.next {
+  right: 10px;
+}
+
+.carousel-dots {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.carousel-dots span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  background: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.carousel-dots .active {
+  background: #ff4081;
+}
+
+/* Filtros */
+.filters-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.category-filters button {
+  margin-right: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.category-filters button.active {
+  background-color: #ff4081;
+  color: white;
+}
+
+.sort-by label {
+  margin-right: 0.5rem;
+}
+
+.sort-by select {
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Events */
+.events-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.event-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.event-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-content h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+  color: #111;
+}
+
+.event-details {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.event-price {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+.event-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.event-description {
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  color: #555;
+  flex: 1;
+}
+
+.btn-buy {
+  background-color: #ff4081;
+  color: white;
+  border: none;
+  padding: 0.6rem;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-buy:hover {
+  background-color: #e73370;
+}
+
+.teatro-info-section {
+  padding: 40px;
+  background-color: #f7f7f7;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.teatro-info-flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.teatro-img {
+  flex: 1;
+  max-width: 500px;
+}
+
+.teatro-img img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+
+.teatro-img img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.teatro-descripcion {
+  flex: 1;
+}
+
+.teatro-descripcion h2 {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.teatro-descripcion p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+/* Carrusel horizontal */
+.carrusel-asientos {
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.carrusel-track {
+  display: flex;
+  gap: 20px;
+  min-width: fit-content;
+}
+
+.carrusel-item {
+  display: flex;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  min-width: 450px;
+  transition: transform 0.3s ease;
+}
+
+.carrusel-item:hover {
+  transform: scale(1.03);
+}
+
+.carrusel-item img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.item-texto {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.item-texto h3 {
+  margin: 0;
+  color: #222;
+  font-size: 1.3rem;
+}
+
+.item-texto p {
+  margin: 8px 0 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .teatro-info-flex {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .carrusel-item {
+    min-width: 90%;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .carrusel-item img {
+    border-radius: 10px 10px 0 0;
+  }
+
+  .item-texto {
+    padding: 10px;
+  }
+}
+.footer {
+  background-color: #111827;
+  color: #ffffff;
+  padding: 40px 20px 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 30px;
+}
+
+.footer-text h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: #facc15;
+}
+
+.footer-text p {
+  margin: 5px 0;
+  color: #d1d5db;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links a {
+  color: #9ca3af;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #facc15;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid #374151;
+  font-size: 14px;
+  color: #6b7280;
+}

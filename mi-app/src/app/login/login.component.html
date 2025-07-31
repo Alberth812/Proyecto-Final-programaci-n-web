@@ -1,0 +1,268 @@
+<!-- Fondo animado con formas geométricas -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="background-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+
+<!-- Contenedor principal dividido -->
+<div class="main-container">
+    <!-- Panel izquierdo - Información -->
+    <div class="left-panel">
+        <div class="brand-section">
+            <div class="logo">
+                <i class="fas fa-ticket-alt"></i>
+                <span>TicketMaster</span>
+                <span class="pro">PRO</span>
+            </div>
+
+            <h1 class="welcome-title">Bienvenido de vuelta</h1>
+            <p class="welcome-subtitle">Accede a los mejores eventos y espectáculos exclusivos</p>
+
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <div>
+                        <h3>100% Seguro</h3>
+                        <p>Transacciones protegidas con encriptación de nivel bancario</p>
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <i class="fas fa-bolt"></i>
+                    <div>
+                        <h3>Compra Instantánea</h3>
+                        <p>Boletos digitales enviados al momento</p>
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <i class="fas fa-headset"></i>
+                    <div>
+                        <h3>Soporte 24/7</h3>
+                        <p>Atención personalizada cuando la necesites</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel derecho - Formulario de login -->
+    <div class="right-panel">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="login-header">
+                    <h2>Iniciar Sesión</h2>
+                    <p>Ingresa tus credenciales para continuar</p>
+                </div>
+
+                <form class="login-form" (ngSubmit)="login()" #loginForm="ngForm">
+                    <!-- Campo Usuario -->
+                    <div class="input-group">
+                        <label for="usuario">
+                            <i class="fas fa-user"></i>
+                            Usuario o Email
+                        </label>
+                        <input 
+                            type="text" 
+                            id="usuario" 
+                            name="usuario" 
+                            [(ngModel)]="usuario" 
+                            (input)="onInputChange()"
+                            (keydown)="onEnterPressed($event)" 
+                            required 
+                            minlength="3" 
+                            placeholder="Ingresa tu usuario"
+                            autocomplete="username" 
+                            [disabled]="isLoading" 
+                        />
+                    </div>
+
+                    <!-- Campo Contraseña -->
+                    <div class="input-group">
+                        <label for="contrasena">
+                            <i class="fas fa-lock"></i>
+                            Contraseña
+                        </label>
+                        <div class="password-wrapper">
+                            <input 
+                                [type]="passwordFieldType" 
+                                id="contrasena" 
+                                name="contrasena" 
+                                [(ngModel)]="contrasena"
+                                (input)="onInputChange()" 
+                                (keydown)="onEnterPressed($event)" 
+                                required 
+                                minlength="4"
+                                placeholder="Ingresa tu contraseña" 
+                                autocomplete="current-password"
+                                [disabled]="isLoading" 
+                            />
+                            <button 
+                                type="button" 
+                                class="toggle-password" 
+                                (click)="togglePasswordVisibility()"
+                                aria-label="Mostrar contraseña" 
+                                [disabled]="isLoading"
+                            >
+                                <i [class]="passwordToggleIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Botón de login -->
+                    <button type="submit" class="login-btn" [disabled]="isFormDisabled">
+                        <span class="btn-text">{{ loginButtonText }}</span>
+                        <i [class]="loginButtonIcon + ' btn-icon'"></i>
+                    </button>
+
+                    <!-- Botón para abrir el modal de registro -->
+                    <button type="button" class="register-btn" (click)="showRegisterModal = true">
+                        <span class="btn-text">¿No tienes cuenta? Regístrate</span>
+                        <i class="fas fa-user-plus btn-icon"></i>
+                    </button>
+
+                    <!-- Error principal -->
+                    <div class="error main-error" *ngIf="error" [class.show]="error">
+                        {{ error }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de registro -->
+<div class="modal-overlay" *ngIf="showRegisterModal" (click)="closeModalOnOverlayClick($event)">
+    <div class="modal" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h3>Crear Cuenta</h3>
+            <button type="button" (click)="showRegisterModal = false" class="close-btn" aria-label="Cerrar modal">
+                &times;
+            </button>
+        </div>
+
+        <form (ngSubmit)="registrarse()" #registroForm="ngForm" class="register-form">
+            <!-- Campo Nombre Completo -->
+            <div class="input-group">
+                <label for="nombreCompleto">
+                    <i class="fas fa-user"></i>
+                    Nombre Completo
+                </label>
+                <input 
+                    type="text" 
+                    id="nombreCompleto" 
+                    name="nombreCompleto"
+                    [(ngModel)]="nombreCompleto" 
+                    required 
+                    minlength="2"
+                    placeholder="Ingresa tu nombre completo"
+                    autocomplete="name"
+                />
+            </div>
+
+            <!-- Campo Correo Electrónico -->
+            <div class="input-group">
+                <label for="correo">
+                    <i class="fas fa-envelope"></i>
+                    Correo Electrónico
+                </label>
+                <input 
+                    type="email" 
+                    id="correo" 
+                    name="correo"
+                    [(ngModel)]="correo" 
+                    required 
+                    email
+                    placeholder="ejemplo@correo.com"
+                    autocomplete="email"
+                />
+            </div>
+
+            <!-- Campo Usuario -->
+            <div class="input-group">
+                <label for="nuevoUsuario">
+                    <i class="fas fa-user-circle"></i>
+                    Usuario
+                </label>
+                <input 
+                    type="text" 
+                    id="nuevoUsuario" 
+                    name="nuevoUsuario"
+                    [(ngModel)]="nuevoUsuario" 
+                    required 
+                    minlength="3"
+                    placeholder="Elige un nombre de usuario"
+                    autocomplete="username"
+                />
+            </div>
+
+            <!-- Campo Nueva Contraseña -->
+            <div class="input-group">
+                <label for="nuevaContrasena">
+                    <i class="fas fa-lock"></i>
+                    Contraseña
+                </label>
+                <div class="password-wrapper">
+                    <input 
+                        [type]="registerPasswordFieldType"
+                        id="nuevaContrasena" 
+                        name="nuevaContrasena"
+                        [(ngModel)]="nuevaContrasena"
+                        required 
+                        minlength="6"
+                        pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$"
+                        placeholder="Mínimo 6 caracteres, con letra, número y símbolo"
+                        autocomplete="new-password"
+                    />
+                    <button 
+                        type="button" 
+                        class="toggle-password" 
+                        (click)="toggleRegisterPasswordVisibility()"
+                        aria-label="Mostrar contraseña"
+                    >
+                        <i [class]="registerPasswordToggleIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Campo Confirmar Contraseña -->
+            <div class="input-group">
+                <label for="confirmarContrasena">
+                    <i class="fas fa-lock"></i>
+                    Confirmar Contraseña
+                </label>
+                <input 
+                    type="password" 
+                    id="confirmarContrasena" 
+                    name="confirmarContrasena"
+                    [(ngModel)]="confirmarContrasena"
+                    required 
+                    placeholder="Confirma tu contraseña"
+                    autocomplete="new-password"
+                />
+            </div>
+
+            <!-- Botón de registro -->
+            <button type="submit" class="login-btn" [disabled]="!registroForm.form.valid">
+                <span class="btn-text">Crear cuenta</span>
+                <i class="fas fa-user-plus btn-icon"></i>
+            </button>
+
+            <!-- Ya tienes cuenta -->
+            <button type="button" class="register-btn" (click)="showRegisterModal = false">
+                <span class="btn-text">¿Ya tienes cuenta? Inicia sesión</span>
+                <i class="fas fa-sign-in-alt btn-icon"></i>
+            </button>
+
+            <!-- Error de registro -->
+            <div class="error register-error" *ngIf="registerError" [class.show]="registerError">
+                {{ registerError }}
+            </div>
+        </form>
+    </div>
+</div>
