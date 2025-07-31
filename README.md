@@ -376,7 +376,7 @@ database/
 resources/
 └── views/
     └── boletos/
-        └── ticket.blade.php  ← Plantilla del PDF
+        └── ticket.blade.php 
 ```
 
 
