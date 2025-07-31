@@ -402,7 +402,7 @@ php artisan serve
 
 
 ## Licencia
-Este proyecto es de código abierto para fines educativos. Puede modificarse y distribuirse con reconocimiento del autor.
+Este proyecto es de código abierto para fines educativos. 
 
 
 
