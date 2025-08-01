@@ -29,7 +29,7 @@
 
 ##   Tipo de Sistema
 **Sistema Web Full-Stack (Frontend en Angular, Backend en Laravel/PHP)**  
-Aplicación SPA (Single Page Application) desarrollada con **Angular 20+** en el frontend, consumiendo una API RESTful desde un backend (no incluido en este repositorio, pero configurado para conectarse a `http://127.0.0.1:8000`).  
+Aplicación SPA (Single Page Application) desarrollada con **Angular 20+** en el frontend, consumiendo una API RESTful desde un backend. 
 
 
 
